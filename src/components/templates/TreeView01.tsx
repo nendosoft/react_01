@@ -87,7 +87,7 @@ const useStyles = makeStyles(
 
 const treeClick = (orgCode: string) => {
   console.log(orgCode);
-  const users = useSelector<UserState, User[]>((state) => state.users); // (1)
+  // const users = useSelector<UserState, User[]>((state) => state.users); // (1)
 }
 
 // const handleChange = (event: React.ChangeEvent<{}>, orgCode: string) => {
