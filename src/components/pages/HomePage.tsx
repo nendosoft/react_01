@@ -10,35 +10,10 @@ import Footer from "../templates/Footer";
 
 const HomePage: React.FC = () => {
   return (
-    // <GenericTemplate title="トップページ">
-    //   <>トップページ内容</>
-    // </GenericTemplate>
     <>
       <Header />
       <Menu />
-
-      {/* <table style={{ width: '100%' }}>
-        <tbody>
-          <tr>
-            <td style={{ width: '20%' }}><TreeView01 /></td>
-            <td style={{ width: '80%', position: 'relative', top: -28 }}><Demo /></td>
-          </tr>
-        </tbody>
-      </table> */}
-
       <TreeView01 />
-
-      {/* <div style={{display: 'inline-block', width: '20%',backgroundColor: 'red'}}><TreeView02/></div> */}
-      {/* <div style={{width: '20%', display: 'inline-block'}}><TreeView01/></div> */}
-      {/* <div style={{display: 'inline-block', backgroundColor: 'red'}}>aaa</div> */}
-      {/* <div style={{width: '60%', display: 'inline-block'}}><Demo/></div> */}
-
-      {/* <GenericTemplate title="トップページ">test</GenericTemplate> */}
-      {/* <Demo/> */}
-
-      {/* <TreeView02/> */}
-      {/* <Demo/> */}
-
       <Footer />
     </>
   );
