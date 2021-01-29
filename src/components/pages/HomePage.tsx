@@ -17,16 +17,17 @@ const HomePage: React.FC = () => {
       <Header />
       <Menu />
 
-      <table style={{ width: '100%' }}>
+      {/* <table style={{ width: '100%' }}>
         <tbody>
           <tr>
             <td style={{ width: '20%' }}><TreeView01 /></td>
             <td style={{ width: '80%', position: 'relative', top: -28 }}><Demo /></td>
           </tr>
-          {/* <div style={{display: 'inline-block', width: '20%', backgroundColor: 'red'}}><TreeView02/></div> */}
-          {/* <div style={{display: 'inline-block', width: '60%', backgroundColor: 'green'}}>bbb</div> */}
         </tbody>
-      </table>
+      </table> */}
+
+      <TreeView01 />
+
       {/* <div style={{display: 'inline-block', width: '20%',backgroundColor: 'red'}}><TreeView02/></div> */}
       {/* <div style={{width: '20%', display: 'inline-block'}}><TreeView01/></div> */}
       {/* <div style={{display: 'inline-block', backgroundColor: 'red'}}>aaa</div> */}

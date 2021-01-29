@@ -12,7 +12,13 @@ export const userSlice = createSlice({
       ...state,
       users: action.payload.users2,
       isLoading: false,
-      error: null,
+      error222: null,
+    }),
+    membersClear: (state) => ({
+      ...state,
+      users: [],
+      isLoading: false,
+      error222: null,
     }),
   },
 });

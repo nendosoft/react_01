@@ -12,7 +12,8 @@ import TreeItem, { TreeItemProps } from '@material-ui/lab/TreeItem';
 import Collapse from '@material-ui/core/Collapse';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { TransitionProps } from '@material-ui/core/transitions';
-import Demo from "containers/templates/Demo";
+// import Demo from "containers/templates/Demo";
+import { Demo } from "components/templates/Demo";
 import { Link } from 'react-router-dom';
 import usemembersGotten from 'hooks/use-get-members';
 
@@ -85,61 +86,80 @@ const useStyles = makeStyles(
   }),
 );
 
-const treeClick = (orgCode: string) => {
-  console.log(orgCode);
-  // const users = useSelector<UserState, User[]>((state) => state.users); // (1)
-}
-
-// const handleChange = (event: React.ChangeEvent<{}>, orgCode: string) => {
-//   const [orgCode, setOrgCode] = React.useState('');
-//   setOrgCode(orgCode);
-// };
-
+// const useClick = (orgCode: string) => {
+//   console.log(orgCode);
+// }
 
 // const TreeView01: React.FC = () => {
 // export default function CustomizedTreeView() {
+// export const TreeView01: React.FC<{ orgCodes: string[] }> = ({ orgCodes = [] }) => (  
 export const TreeView01: FC<{ orgCodes?: string[] }> = ({ orgCodes = [] }) => {
-  // export const TreeView01: React.FC<{ orgCodes: string[] }> = ({ orgCodes = [] }) => (  
+  const [orgCode, setOrgCode] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const users = useSelector<UserState, User[]>((state) => state.users); // (1)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    let isUnmounted = false;
+    const { membersGotten, membersClear } = userSlice.actions;
+
+    const load = async (): Promise<void> => {
+      setIsLoading(true);
+
+      try {
+        const users2 = await getMembers(orgCode); // eslint-disable-line no-shadow
+
+        if (!isUnmounted) {
+          // user.tsのmembersGottenで新たに取得したメンバ郡でStoreのStateを更新している
+          // 結果、(1)のusersが更新される
+          dispatch(membersGotten({ users2 }));
+        }
+      } catch (err) {
+        // throw new Error(`organization '${orgCode}' not exists`);
+        dispatch(membersClear());
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void load();
+
+    return () => {
+      isUnmounted = true;
+    };
+  }, [orgCode, dispatch]);
+
   const classes = useStyles();
-  // let test = "3";
 
   return (
-    <TreeView
-      className={classes.root}
-      defaultExpanded={['1']}
-      defaultCollapseIcon={<MinusSquare />}
-      defaultExpandIcon={<PlusSquare />}
-      defaultEndIcon={<CloseSquare />}
-    >
-      <StyledTreeItem nodeId="1" label="Root">
-        {/* <StyledTreeItem nodeId="2" label="Hello" />
-        <StyledTreeItem nodeId="3" label="Subtree with children">
-          <StyledTreeItem nodeId="6" label="Hello" />
-          <StyledTreeItem nodeId="7" label="Sub-subtree with children" onClick={() => alert('aaa')} >
-            <StyledTreeItem nodeId="9" label="Child 1" />
-            <StyledTreeItem nodeId="10" label="Child 2" />
-            <StyledTreeItem nodeId="11" label="Child 3" />
-          </StyledTreeItem>
-          <StyledTreeItem nodeId="8" label="Hello" />
-        </StyledTreeItem>
-        <StyledTreeItem nodeId="4" label="World" /> */}
-
-        {/* <StyledTreeItem nodeId="2" label="Hello" onClick={() => alert('world')} /> */}
-        <StyledTreeItem nodeId="2" label="Hello" onClick={() => <CloseSquare />} />
-        <StyledTreeItem nodeId="3" label="会社">
-          {orgCodes.map((orgCode, index) => (
-            // String(index),
-            // console.log(test),
-            // <StyledTreeItem key={index} nodeId={orgCode} label={orgCode} onLabelClick={(e) => <Link to="/test" /> } />
-            // <StyledTreeItem key={index} nodeId={orgCode} label={orgCode} onLabelClick={() => alert({orgCodes}) } />
-            <StyledTreeItem key={index} nodeId={orgCode} label={orgCode} onLabelClick={() => treeClick(orgCode) } />
-
-            // <Link to={`/${orgCode}/members`} key={index} ><StyledTreeItem key={index} nodeId={orgCode} label={orgCode} /></Link>
-            // <StyledTreeItem key={index} nodeId={orgCode} label={orgCode} onLabelClick={() => usemembersGotten(orgCode) } />
-          ))}
-        </StyledTreeItem>
-      </StyledTreeItem>
-    </TreeView>
+    <table style={{ width: '100%' }}>
+      <tbody>
+        <tr>
+          <td style={{ width: '20%' }}>
+            <TreeView
+              className={classes.root}
+              defaultExpanded={['1']}
+              defaultCollapseIcon={<MinusSquare />}
+              defaultExpandIcon={<PlusSquare />}
+              defaultEndIcon={<CloseSquare />}
+            >
+              <StyledTreeItem nodeId="1" label="Root" onLabelClick={() => setOrgCode("") }>
+                <StyledTreeItem nodeId="2" label="Hello" onClick={() => <CloseSquare /> } onLabelClick={() => setOrgCode("") } />
+                <StyledTreeItem nodeId="3" label="会社">
+                  {orgCodes.map((orgCode, index) => (
+                    <StyledTreeItem key={index} nodeId={orgCode} label={orgCode} onClick={() => setOrgCode(orgCode) } />
+                    // <StyledTreeItem key={index} nodeId={orgCode} label={orgCode} />
+                  ))}
+                </StyledTreeItem>
+              </StyledTreeItem>
+            </TreeView>
+          </td>
+          <td style={{ width: '80%', position: 'relative', top: -28 }}>
+          <Demo {...{ orgCode, users, isLoading }} />
+          </td>
+        </tr>
+      </tbody>
+    </table>
   );
   // }
 };
