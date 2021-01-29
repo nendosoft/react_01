@@ -18,7 +18,8 @@ const App: React.FC = () => {
         <Route path="/products" component={ProductPage} exact />
         {/* <Route path="/test" component={Demo} exact /> */}
         {/* <Route path="/:orgCode/members" element={<Members />} /> */}
-        <Route component={NotFound} />
+        {/* <Route component={NotFound} /> */}
+        <Route component={HomePage} />
       </Switch>
     </Router>
   );
