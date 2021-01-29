@@ -145,7 +145,7 @@ export const TreeView01: FC<{ orgCodes?: string[] }> = ({ orgCodes = [] }) => {
             >
               <StyledTreeItem nodeId="1" label="Root" onLabelClick={() => setOrgCode("") }>
                 <StyledTreeItem nodeId="2" label="Hello" onClick={() => <CloseSquare /> } onLabelClick={() => setOrgCode("") } />
-                <StyledTreeItem nodeId="3" label="会社a">
+                <StyledTreeItem nodeId="3" label="company">
                   {orgCodes.map((orgCode, index) => (
                     <StyledTreeItem key={index} nodeId={orgCode} label={orgCode} onClick={() => setOrgCode(orgCode) } />
                     // <StyledTreeItem key={index} nodeId={orgCode} label={orgCode} />
