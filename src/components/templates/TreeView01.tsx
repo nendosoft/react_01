@@ -3,7 +3,8 @@ import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { User, getMembers } from 'domains/github';
-import { userSlice, UserState } from 'features/user';
+// import { userSlice, UserState } from 'features/user';
+import { userSlice, UserState, MultiState } from 'features/user';
 
 import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon';
 import { fade, makeStyles, withStyles, Theme, createStyles } from '@material-ui/core/styles';
@@ -94,7 +95,8 @@ const useStyles = makeStyles(
 // export default function CustomizedTreeView() {
 // export const TreeView01: React.FC<{ orgCodes: string[] }> = ({ orgCodes = [] }) => (  
 export const TreeView01: FC<{ orgCodes?: string[] }> = ({ orgCodes = [] }) => {
-  const [orgCode, setOrgCode] = useState('');
+  const [orgCode, setOrgCode] = useState("");
+  // const orgCode = useSelector<MultiState, string>((state) => state.orgCode); // (1)
   const [isLoading, setIsLoading] = useState(false);
   const users = useSelector<UserState, User[]>((state) => state.users); // (1)
   const dispatch = useDispatch();
@@ -110,9 +112,9 @@ export const TreeView01: FC<{ orgCodes?: string[] }> = ({ orgCodes = [] }) => {
         const users2 = await getMembers(orgCode); // eslint-disable-line no-shadow
 
         if (!isUnmounted) {
-          // user.tsのmembersGottenで新たに取得したメンバ郡でStoreのStateを更新している
+          // user.tsのmembersGottenで新たに取得したメンバ群でStoreのStateを更新している
           // 結果、(1)のusersが更新される
-          dispatch(membersGotten({ users2 }));
+          dispatch(membersGotten({ users2, orgCode }));
         }
       } catch (err) {
         // throw new Error(`organization '${orgCode}' not exists`);
