@@ -27,7 +27,8 @@ const useGetMembers = (orgCode: string): ReturnValue => {
         if (!isUnmounted) {
           // user.tsのmembersGottenで新たに取得したメンバ郡でStoreのStateを更新している
           // 結果、(1)のusersが更新される
-          dispatch(membersGotten({ users2 }));
+          // dispatch(membersGotten({ users2 }));
+          dispatch(membersGotten({ users2, orgCode }));
         }
       } catch (err) {
         throw new Error(`organization '${orgCode}' not exists`);
