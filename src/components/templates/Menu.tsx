@@ -6,6 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { SlowMotionVideo } from '@material-ui/icons';
+import Select from 'components/molecules/Select'
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -25,8 +26,9 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box p={3} style={{height: 160, border: '1px solid gray'}}>
-          <Typography>{children}</Typography>
+        <Box p={3} style={{ height: 160, border: '1px solid gray' }}>
+          {/* <Typography>{children}</Typography> */}
+          {children}
         </Box>
       )}
     </div>
@@ -88,6 +90,15 @@ export default function ScrollableTabsButtonAuto() {
       </TabPanel>
       <TabPanel value={value} index={3}>
         処理ログ
+        <table style={{ width: '100%' }} >
+          <tbody>
+            <tr>
+              <td style={{ width: '50%', border: '1px solid gray' }}><Select /></td>
+              <td style={{ width: '50%', border: '1px solid gray' }}>結果</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
       </TabPanel>
     </div>
   );

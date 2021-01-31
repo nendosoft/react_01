@@ -22,8 +22,8 @@ const App: React.FC = () => {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/products" element={<ProductPage />} />
-      {/* <Route path="*" element={<Navigate to="/" replace />} />; */}
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<Navigate to="/" replace />} />;
+      {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>
   );
 };
