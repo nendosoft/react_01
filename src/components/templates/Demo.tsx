@@ -19,22 +19,23 @@ export type Props = {
 
 const columns: ColDef[] = [
   { field: 'id', headerName: 'ID', width: 140 },
-  { field: 'url', headerName: 'url', width: 280 },
   { field: 'login', headerName: 'login', width: 130 },
+  { field: 'htmlUrl', headerName: 'htmlUrl', width: 280 },
+  { field: 'nodeId', headerName: 'nodeId', width: 280 },
+  // {
+  //   field: 'age',
+  //   headerName: 'Age',
+  //   type: 'number',
+  //   width: 90,
+  // },
   {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
+    field: 'id and loginId',
+    headerName: 'id and loginId',
+    // description: 'This column has a value getter and is not sortable.',
+    // sortable: false,
     width: 160,
     valueGetter: (params: ValueGetterParams) =>
-      `${params.getValue('firstName') || ''} ${params.getValue('lastName') || ''}`,
+      `${params.getValue('id') || ''} ${params.getValue('login') || ''}`,
   },
 ];
 
@@ -68,7 +69,7 @@ export const Demo: FC<Props> = ({
 
   return (
     <>
-    <div style={{ height: 540 }}>
+    <div style={{ height: 440 }}>
       <DataGrid rows={users} columns={columns} pageSize={5} checkboxSelection disableColumnMenu />
     </div>
       {/* <Helmet>
